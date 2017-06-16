@@ -78,9 +78,9 @@ AddEventHandler('bank:withdraw', function(amount)
 end)
 
 RegisterServerEvent('bank:remove')
-AddEventHandler('bank:remove', function(source, amount)
-  TriggerEvent('es:getPlayerFromId', source, function(user)
-    local rounded = round(tonumber(amount), 0)
+AddEventHandler('bank:remove', function(source, amount) -- NEVER trust the client !
+  TriggerEvent('es:getPlayerFromId', source, function(user) -- Even the source, but no care here
+    local rounded = - round(math.abs(tonumber(amount)), 0) -- Maybe the amount can be negative, I don't joke
     local player = user.identifier
     local bankbalance = bankBalance(player)
     withdraw(player, rounded)
